@@ -12,7 +12,7 @@ class Goban():
 
     def reset(self) -> None:
         self.board = []
-        for i in range(self.size[Y]):
+        for _ in range(self.size[Y]):
             self.board += [["_"] * self.size[X]]
         print("DEBUG Goban reset to size:", *self.size)
 
