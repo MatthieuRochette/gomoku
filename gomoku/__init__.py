@@ -1,1 +1,1 @@
-from gomoku.utils.output import output
+from .brain import Brain

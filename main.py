@@ -1,6 +1,9 @@
-#!/bin/env python3
-import gomoku
-input()
+#!/usr/bin/env python -u
+from gomoku import *
+
+pbrain = Brain()
+pbrain.start_loop()
+
 # Nt = 5 - len(ligne) avec Nt lignes ayant les extrémités libres
 # Donc si Nt + len(ligne) = 5 -> alors on valeur = +-3
 # Echelle définitive:
