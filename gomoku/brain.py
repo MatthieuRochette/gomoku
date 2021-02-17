@@ -108,26 +108,29 @@ class Brain():
         return input_str.split(" ")
 
     def start_loop(self):
-        while True:
-            # parse command
-            command, *args = self._parse_command(input())
-            print("DEBUG command:", command, file=sys.stderr)
-            print("DEBUG args:", args, file=sys.stderr)
+        try:
+            while True:
+                # parse command
+                command, *args = self._parse_command(input())
+                print("DEBUG command:", command, file=sys.stderr)
+                print("DEBUG args:", args, file=sys.stderr)
 
-            # execute command
-            try:
-                output = self.commands[command](*args)
-                print("DEBUG output:", output, file=sys.stderr)
-            except KeyError:
-                print("UNKNOWN")
-            except Exception as err:
-                print("ERROR", err)
+                # execute command
+                try:
+                    output = self.commands[command](*args)
+                    print("DEBUG output:", output, file=sys.stderr)
+                except KeyError:
+                    print("UNKNOWN")
+                except Exception as err:
+                    print("ERROR", err)
 
-            # print function output
-            else:
-                if output is None:
-                    continue
-                elif isinstance(output, (list, tuple)):
-                    print(*output)
+                # print function output
                 else:
-                    print(output)
+                    if output is None:
+                        continue
+                    elif isinstance(output, (list, tuple)):
+                        print(*output)
+                    else:
+                        print(output)
+        except EOFError:
+            exit(0)
