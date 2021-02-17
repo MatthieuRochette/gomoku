@@ -1,3 +1,5 @@
+import sys
+
 from .goban import Goban
 from random import randint
 
@@ -109,13 +111,13 @@ class Brain():
         while True:
             # parse command
             command, *args = self._parse_command(input())
-            print("DEBUG command:", command)
-            print("DEBUG args:", args)
+            print("DEBUG command:", command, file=sys.stderr)
+            print("DEBUG args:", args, file=sys.stderr)
 
             # execute command
             try:
                 output = self.commands[command](*args)
-                print("DEBUG output:", output)
+                print("DEBUG output:", output, file=sys.stderr)
             except KeyError:
                 print("UNKNOWN")
             except Exception as err:

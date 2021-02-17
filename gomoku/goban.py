@@ -1,3 +1,4 @@
+import sys
 X, Y = 0, 1
 
 
@@ -14,7 +15,7 @@ class Goban():
         self.board = []
         for _ in range(self.size[Y]):
             self.board += [["_"] * self.size[X]]
-        print("DEBUG Goban reset to size:", *self.size)
+        print("DEBUG Goban reset to size:", *self.size, file=sys.stderr)
 
     def reset_to_size(self, x: int, y: int = None) -> None:
         if y is None:
@@ -35,7 +36,7 @@ class Goban():
             self.board[y][x] = "o"
 
     def debug_print(self) -> None:
-        print("DEBUG Goban, size:", *self.size)
-        print("DEBUG enemy pos: 'x' | player pos: 'o'")
+        print("DEBUG Goban, size:", *self.size, file=sys.stderr)
+        print("DEBUG enemy pos: 'x' | player pos: 'o'", file=sys.stderr)
         for line in self.board:
-            print("DEBUG", *(str(elem).rjust(2, ' ') for elem in line))
+            print("DEBUG", *(str(elem).rjust(2, ' ') for elem in line), file=sys.stderr)
