@@ -50,10 +50,10 @@ class Brain():
             )
         return int(coords[0]), int(coords[1])
 
-    def start(self, size) -> str:
+    def start(self, size: str = "20") -> str:
         return self.rectstart(size + ',' + size)
 
-    def rectstart(self, size: str) -> str:
+    def rectstart(self, size: str = "20,20") -> str:
         size_x, size_y = self._get_coordinates_from_arg(size)
         self.goban.reset_to_size(size_x, size_y)
         return "OK"
