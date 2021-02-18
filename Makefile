@@ -10,6 +10,6 @@ clean:
 	rm -r -f ./__pycache__ *.spec ./build ./dist
 
 fclean : clean
-	rm $(NAME)
+	rm -f $(NAME)
 
 re:	fclean	all
