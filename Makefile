@@ -3,11 +3,11 @@ SRC	=	main.py
 NAME	=	pbrain-gomoku-ai
 
 all:
-	cp $(SRC) $(NAME)
-	chmod +x $(NAME)
+	pip3 install --user -r requirements.txt
+	pyinstaller -F --distpath ./ --name $(NAME) $(SRC)
 
 clean:
-	rm -rf **/__pycache__ **/*.pyc
+	rm -r -f ./__pycache__ *.spec ./build ./dist
 
 fclean : clean
 	rm $(NAME)

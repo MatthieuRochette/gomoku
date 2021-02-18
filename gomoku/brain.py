@@ -98,7 +98,7 @@ class Brain():
 
     def end(self):
         # delete temp files if any
-        exit(0)
+        sys.exit(0)
 
     def about(self):
         pass
@@ -133,4 +133,4 @@ class Brain():
                     else:
                         print(output)
         except EOFError:
-            exit(0)
+            sys.exit(0)

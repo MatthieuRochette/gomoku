@@ -1,5 +1,5 @@
 #!/usr/bin/env python -u
-from gomoku import *
+from gomoku import Brain
 
 pbrain = Brain()
 pbrain.start_loop()
