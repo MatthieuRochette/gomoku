@@ -19,11 +19,10 @@ This is a 3rd year project at Epitech, in the Artificial Intelligence module.
 - Execute the command `python compile.py`. It creates an executable at the root of the repository.
 - You can choose to copy or move the created executable file wherever you want, or leave it there.
 - Open Piskvork, and go to `Players > Preferences` in the top menu (or press F4), and change one of the players to Computer and set the path to the executable you created before.
+- (Alternative to Piskvork) You can launch the program in a terminal, but it's less enjoyable.
 
 ### On linux
-
 Two options:  
-
 - Just run `python3 main.py` at the root of the repo  
   
 or  
@@ -31,10 +30,9 @@ or
 - Run `make`, which will create an executable copy of main.py, and pass this copy's path to your piksvork manager program.
 
 ## Authors
+- Matthieu Rochette
 - Theo Rohmer
-- Matthieu Rochette (myself)
 
 ## License
-
-Free of use, but please do mention a link to this repository.
-Also, don't use for cheating in your studies !
+Free of use, but please do mention a link to this repository if used elsewhere.  
+Also, don't use this for cheating in your studies ; I see you, dear Epitech student !

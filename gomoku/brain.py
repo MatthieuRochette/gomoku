@@ -1,7 +1,7 @@
 import sys
 
 from .goban import Goban
-from random import randint
+from .evaluate import evaluate_board
 
 
 class Brain():
@@ -30,17 +30,6 @@ class Brain():
             "folder": None
         }
 
-    def _play(self, fake=False) -> str:
-        # evaluate board
-        # make best move available
-        # return move made as "x,y"
-        played = str(randint(0, 19)) + "," + str(randint(0, 19))
-        played_x, played_y = self._get_coordinates_from_arg(played)
-        if not fake:
-            self.goban.place(played_x, played_y, False)
-            self.goban.debug_print()
-        return played
-
     @staticmethod
     def _get_coordinates_from_arg(arg) -> tuple:
         coords = arg.split(',')
@@ -49,6 +38,19 @@ class Brain():
                 "Incorrectly formatted or wrong number of arguments"
             )
         return int(coords[0]), int(coords[1])
+
+    def _play(self, fake=False) -> str:
+        # evaluate board
+        play_x, play_y = evaluate_board(self.goban)
+
+        if not fake:
+            # make best move available
+            self.goban.place(play_x, play_y, False)
+            print("DEBUG real move:")
+            self.goban.debug_print()
+
+        # return move made as "x,y"
+        return str(play_x) + "," + str(play_y)
 
     def start(self, size: str = "20") -> str:
         return self.rectstart(size + ',' + size)
@@ -63,10 +65,18 @@ class Brain():
         # set turn on the board
         self.goban.place(turn_x, turn_y, True)
         # play
+        print("DEBUG Playing at end of turn")
         return self._play()
 
     def begin(self) -> str:
-        return self._play()
+        play_x = self.goban.size[0] // 2
+        play_y = self.goban.size[1] // 2
+
+        self.goban.place(play_x, play_y, False)
+        self.goban.debug_print()
+
+        # return move made as "x,y"
+        return str(play_x) + "," + str(play_y)
 
     def board(self) -> str:
         input_str = input()
@@ -98,6 +108,7 @@ class Brain():
 
     def end(self):
         # delete temp files if any
+        # exit
         sys.exit(0)
 
     def about(self):
@@ -105,6 +116,7 @@ class Brain():
 
     @staticmethod
     def _parse_command(input_str):
+        # tokenize the input
         return input_str.split(" ")
 
     def start_loop(self):
