@@ -42,12 +42,83 @@ def get_golden_zone(goban: Goban) -> list:
     return golden_pos_list
 
 
+def find_patterns(goban: Goban, pos: tuple, patterns: dict) -> int:
+    # goban.debug_print()
+    # print("DEBUG", pos)
+    min_x = pos[X] - 4 if pos[X] - 4 >= 0 else 0
+    min_y = pos[Y] - 4 if pos[Y] - 4 >= 0 else 0
+    max_x = pos[X] + 5 if pos[X] + 5 < goban.size[X]\
+        else goban.size[X] - 1
+    max_y = pos[Y] + 5 if pos[Y] + 5 < goban.size[Y]\
+        else goban.size[Y] - 1
+    range_x = max_x - min_x
+    range_y = max_y - min_y
+    for j in range(range_y):
+        for i in range(range_x):
+            if goban.board[j][i] not in [goban.self_char, goban.base_char, goban.enemy_char]:
+                goban.board[j][i] = goban.base_char
+    offset_x = 0
+    diago_1 = ""
+    for offset_y in range(range_y):
+        diago_1 += str(goban.board[min_y + offset_y][min_x + offset_x])
+        offset_x += 1
+        if offset_x > range_x:
+            break
+    # print("DEBUG diago_1", diago_1)
+    diago_2 = ""
+    offset_x = 0
+    for offset_y in range(range_y):
+        diago_2 += str(goban.board[max_y - offset_y - 1][min_x + offset_x])
+        offset_x += 1
+        if offset_x > range_x:
+            break
+    # print("DEBUG diago_2", diago_2)
+    hori = ""
+    for offset_x in range(range_x):
+        hori += str(goban.board[pos[Y]][min_x + offset_x])
+    # print("DEBUG hori", hori)
+    verti = ""
+    for offset_y in range(range_y):
+        verti += str(goban.board[min_y + offset_y][pos[X]])
+    # print("DEBUG verti", verti)
+
+    lines = [diago_1, diago_2, hori, verti]
+    ret_val = 0
+    for line in lines:
+        for pattern, value in patterns.items():
+            # print("DEBUG pattern:", pattern, "| line:", line)
+            if pattern in line:
+                ret_val += value
+    # print("DEBUG retval:", ret_val)
+    return ret_val
+
+
 def static_eval(eval_goban: Goban, pos: tuple):
-    return randint(0, 5) - int(randint(0, 5) * 1.2)
-
-
-def test_game_over(eval_goban: Goban, pos: tuple) -> bool:
-    return False
+    self_value = find_patterns(deepcopy(eval_goban), pos, {
+        "ooooo": POS_INF,
+        "_oooo_": 100000,
+        "oo_oo_oo": 100000,
+        "oo_oo": 9000,
+        "xoooo_": 1200,
+        "_oooox": 1200,
+        "_ooo_": 1000,
+        "xooo__": 100,
+        "__ooox": 100,
+        "oo": 10,
+    })
+    enemy_value = find_patterns(deepcopy(eval_goban), pos, {
+        "xxxxx": POS_INF,
+        "_xxxx_": 100000,
+        "xx_xx_xx": 100000,
+        "xx_xx": 9000,
+        "oxxxx_": 1200,
+        "_xxxxo": 1200,
+        "_xxx_": 1000,
+        "oxxx__": 100,
+        "__xxxo": 100,
+        "xx": 10,
+    })
+    return self_value - int(enemy_value * 1.1)
 
 
 def minmax(eval_goban: Goban, pos: tuple, depth: int, alpha: int, beta: int,
@@ -57,11 +128,13 @@ def minmax(eval_goban: Goban, pos: tuple, depth: int, alpha: int, beta: int,
     # eval_goban.debug_print()
     # print("DEBUG end of deepcopied goban in minmax")
 
-    if depth == 0 or test_game_over(eval_goban, pos):
-        return static_eval(eval_goban, pos)
-
     child_goban = deepcopy(eval_goban)
-    child_goban.place(pos[X], pos[Y], False)
+    child_goban.place(pos[X], pos[Y], not maximizing)
+
+    if depth == 0:
+        return static_eval(child_goban, pos)
+    if find_patterns(child_goban, pos, {"ooooo": POS_INF, "xxxxx": POS_INF}) >= POS_INF:
+        return POS_INF
 
     if maximizing:
         max_eval = NEG_INF
@@ -74,7 +147,6 @@ def minmax(eval_goban: Goban, pos: tuple, depth: int, alpha: int, beta: int,
             if beta <= alpha:
                 break
         return max_eval
-
     else:
         min_eval = POS_INF
         for child_pos in get_golden_zone(child_goban):

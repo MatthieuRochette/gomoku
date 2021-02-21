@@ -3,11 +3,10 @@ X, Y = 0, 1
 
 
 class Goban():
-    def __init__(self, x=None, y=None, base_char="_", enemy_char="x",
-                 self_char="o") -> None:
-        self.base_char = base_char
-        self.enemy_char = enemy_char
-        self.self_char = self_char
+    def __init__(self, x=None, y=None) -> None:
+        self.base_char = "_"
+        self.enemy_char = "x"
+        self.self_char = "o"
 
         if x is None:
             return
