@@ -10,3 +10,4 @@ pbrain-gomoku-ai
 _*.html
 _*.txt
 test.txt
+state.tur
