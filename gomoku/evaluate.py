@@ -53,10 +53,15 @@ def find_patterns(goban: Goban, pos: tuple, patterns: dict) -> int:
         else goban.size[Y] - 1
     range_x = max_x - min_x
     range_y = max_y - min_y
-    for j in range(range_y):
-        for i in range(range_x):
-            if goban.board[j][i] not in [goban.self_char, goban.base_char, goban.enemy_char]:
+    # print("DEBUG board before cleaning", file=sys.stderr, flush=True)
+    # goban.debug_print()
+    for j in range(min_y, max_y + 1):
+        for i in range(min_x, max_x + 1):
+            if str(goban.board[j][i]) not in [goban.self_char, goban.base_char, goban.enemy_char]:
+                # print("DEBUG cleaning pos (", i, j, ")", file=sys.stderr, flush=True)
                 goban.board[j][i] = goban.base_char
+    # print("DEBUG cleaned board", file=sys.stderr, flush=True)
+    # goban.debug_print()
     offset_x = 0
     diago_1 = ""
     for offset_y in range(range_y):
@@ -64,7 +69,7 @@ def find_patterns(goban: Goban, pos: tuple, patterns: dict) -> int:
         offset_x += 1
         if offset_x > range_x:
             break
-    # print("DEBUG diago_1", diago_1)
+    # print("DEBUG diago_1", diago_1, file=sys.stderr, flush=True)
     diago_2 = ""
     offset_x = 0
     for offset_y in range(range_y):
@@ -72,15 +77,15 @@ def find_patterns(goban: Goban, pos: tuple, patterns: dict) -> int:
         offset_x += 1
         if offset_x > range_x:
             break
-    # print("DEBUG diago_2", diago_2)
+    # print("DEBUG diago_2", diago_2, file=sys.stderr, flush=True)
     hori = ""
     for offset_x in range(range_x):
         hori += str(goban.board[pos[Y]][min_x + offset_x])
-    # print("DEBUG hori", hori)
+    # print("DEBUG hori", hori, file=sys.stderr, flush=True)
     verti = ""
     for offset_y in range(range_y):
         verti += str(goban.board[min_y + offset_y][pos[X]])
-    # print("DEBUG verti", verti)
+    # print("DEBUG verti", verti, file=sys.stderr, flush=True)
 
     lines = [diago_1, diago_2, hori, verti]
     ret_val = 0
@@ -89,7 +94,7 @@ def find_patterns(goban: Goban, pos: tuple, patterns: dict) -> int:
             # print("DEBUG pattern:", pattern, "| line:", line)
             if pattern in line:
                 ret_val += value
-    # print("DEBUG retval:", ret_val)
+    # print("DEBUG retval:", ret_val, file=sys.stderr, flush=True)
     return ret_val
 
 
@@ -130,8 +135,10 @@ def minmax(eval_goban: Goban, pos: tuple, depth: int, alpha: int, beta: int,
 
     child_goban = deepcopy(eval_goban)
     child_goban.place(pos[X], pos[Y], not maximizing)
+    # print("DEBUG depth:", depth, "pos:", pos, "enemy:", not maximizing, flush=True, file=sys.stderr)
+    # child_goban.debug_print()
 
-    if depth == 0:
+    if depth <= 0:
         return static_eval(child_goban, pos)
     if find_patterns(child_goban, pos, {"ooooo": POS_INF, "xxxxx": POS_INF}) >= POS_INF:
         return POS_INF
@@ -184,7 +191,7 @@ def evaluate_board(goban: Goban) -> tuple:
     # print("DEBUG", get_golden_zone(eval_goban))
     for pos in get_golden_zone(eval_goban):
         eval_goban.board[pos[Y]][pos[X]] = minmax(
-            deepcopy(eval_goban), pos, 2, NEG_INF, POS_INF, True
+            deepcopy(eval_goban), pos, 1, NEG_INF, POS_INF, True
         )
     print("DEBUG Printing eval board", file=sys.stderr)
     eval_goban.debug_print()
