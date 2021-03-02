@@ -40,7 +40,7 @@ class Goban():
             self.board[y][x] = self.self_char
 
     def debug_print(self) -> None:
-        print("DEBUG Goban, size:", *self.size, file=sys.stderr, flush=True)
-        print("DEBUG enemy pos:", self.enemy_char, "| player pos:", self.self_char, file=sys.stderr, flush=True)
+        print("DEBUG Goban, size:", *self.size, file=sys.stderr)
+        print("DEBUG enemy pos:", self.enemy_char, "| player pos:", self.self_char, file=sys.stderr)
         for line in self.board:
-            print("DEBUG", *(str(elem).rjust(10, ' ') for elem in line), file=sys.stderr, flush=True)
+            print("DEBUG", *(str(elem).rjust(5, ' ') for elem in line), file=sys.stderr)
