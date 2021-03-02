@@ -101,39 +101,45 @@ def find_patterns(goban: Goban, pos: tuple, patterns: dict) -> int:
 def static_eval(eval_goban: Goban, pos: tuple):
     # print("DEBUG char at pos", pos, ":", eval_goban.board[pos[Y]][pos[X]], file=sys.stderr)
         # print("DEBUG evaluating for self", file=sys.stderr)
-    return find_patterns(deepcopy(eval_goban), pos, {
+    return find_patterns(eval_goban, pos, {
         "ooooo": POS_INF,
-        "xxxxo": 100900,
-        "xxxox": 100900,
-        "xxoxx": 100900,
-        "xoxxx": 100900,
-        "oxxxx": 100900,
-        "_xxxo": 100800,
-        "oxxx_": 100800,
-        "_oooo_": 100000,
-        "oo_oo_oo": 100000,
+
+        "xxxxo": 410000,
+        "xxxox": 410000,
+        "xxoxx": 410000,
+        "xoxxx": 410000,
+        "oxxxx": 410000,
+
+        "_xxxo": 105000,
+        "oxxx_": 105000,
+        "xxox_": 101000,
+        "_xoxx": 101000,
+        "xoxx_": 101000,
+        "_xxox": 101000,
+
+        "_oooo": 100000,
+        "oooo_": 100000,
+        "ooo_o": 49000,
+        "o_ooo": 49000,
+        "oo_oo": 49000,
+
+        "_ooo_": 1800,
         "o_o_o": 1000,
-        "xxoooo_": 100000,
-        "_ooooxx": 100000,
-        "x_oooo_x": 9000,
-        "oo_oo": 9000,
-        "xoooo_": 1200,
-        "_oooox": 1200,
-        "_ooo_": 1100,
-        "__ooox": 1000,
-        "xooo__": 1000,
-        "xooo_o": 4000,
-        "o_ooox": 4000,
-        "o_ooo": 1200,
-        "ooo_o": 1200,
-        "xooo__": 500,
-        "__ooox": 500,
+        "__ooo": 1000,
+        "ooo__": 1000,
+
         "ooo__": 700,
         "__ooo": 700,
+        "xooo_": 500,
+        "_ooox": 500,
+
         "oo___": 10,
         "_oo__": 10,
         "__oo_": 10,
         "___oo": 10,
+
+        "oooxo": -2000,
+        "oxooo": -2000,
     })
 
 
@@ -212,7 +218,7 @@ def evaluate_board(goban: Goban) -> tuple:
         copy_goban.place(pos[X], pos[Y], False)
         # copy_goban.debug_print()
         eval_goban.board[pos[Y]][pos[X]] = static_eval(copy_goban, pos)
-    print("DEBUG Printing eval board", file=sys.stderr)
-    eval_goban.debug_print()
+    # print("DEBUG Printing eval board", file=sys.stderr)
+    # eval_goban.debug_print()
     return get_best_move_from_eval(eval_goban)
     # return randint(0, 19), randint(0, 19)

@@ -43,4 +43,4 @@ class Goban():
         print("DEBUG Goban, size:", *self.size, file=sys.stderr)
         print("DEBUG enemy pos:", self.enemy_char, "| player pos:", self.self_char, file=sys.stderr)
         for line in self.board:
-            print("DEBUG", *(str(elem).rjust(7, ' ') for elem in line), file=sys.stderr)
+            print("DEBUG", *(str(elem).rjust(10, ' ') for elem in line), file=sys.stderr)
