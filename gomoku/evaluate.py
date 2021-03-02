@@ -110,12 +110,12 @@ def static_eval(eval_goban: Goban, pos: tuple):
         "xoxxx": 410000,
         "oxxxx": 410000,
 
-        "_xxxo": 105000,
-        "oxxx_": 105000,
-        "xxox_": 101000,
-        "_xoxx": 101000,
-        "xoxx_": 101000,
-        "_xxox": 101000,
+        "_xxxo": 150000,
+        "oxxx_": 150000,
+        "xxox_": 110000,
+        "_xoxx": 110000,
+        "xoxx_": 110000,
+        "_xxox": 110000,
 
         "_oooo": 100000,
         "oooo_": 100000,
