@@ -46,8 +46,8 @@ class Brain():
         if not fake:
             # make best move available
             self.goban.place(play_x, play_y, False)
-            print("DEBUG real move:")
-            self.goban.debug_print()
+            # print("DEBUG real move:")
+            # self.goban.debug_print()
 
         # return move made as "x,y"
         return str(play_x) + "," + str(play_y)
@@ -65,7 +65,7 @@ class Brain():
         # set turn on the board
         self.goban.place(turn_x, turn_y, True)
         # play
-        print("DEBUG Playing at end of turn")
+        # print("DEBUG Playing at end of turn")
         return self._play()
 
     def begin(self) -> str:
@@ -73,7 +73,7 @@ class Brain():
         play_y = self.goban.size[1] // 2
 
         self.goban.place(play_x, play_y, False)
-        self.goban.debug_print()
+        # self.goban.debug_print()
 
         # return move made as "x,y"
         return str(play_x) + "," + str(play_y)
@@ -124,13 +124,13 @@ class Brain():
             while True:
                 # parse command
                 command, *args = self._parse_command(input())
-                print("DEBUG command:", command, file=sys.stderr)
-                print("DEBUG args:", args, file=sys.stderr)
+                # print("DEBUG command:", command, file=sys.stderr)
+                # print("DEBUG args:", args, file=sys.stderr)
 
                 # execute command
                 try:
                     output = self.commands[command](*args)
-                    print("DEBUG output:", output, file=sys.stderr)
+                    # print("DEBUG output:", output, file=sys.stderr)
                 except KeyError:
                     print("UNKNOWN")
                 except Exception as err:

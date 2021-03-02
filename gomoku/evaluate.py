@@ -110,29 +110,26 @@ def static_eval(eval_goban: Goban, pos: tuple):
         "oxxxx": 100900,
         "_xxxo": 100800,
         "oxxx_": 100800,
-        "_xxx__":100700,
-        "__xxx_":100700,
-        "o_xxx_":100600,
-        "_xxx_o":100600,
         "_oooo_": 100000,
         "oo_oo_oo": 100000,
-        "o_o_o": 100000,
+        "o_o_o": 1000,
         "xxoooo_": 100000,
         "_ooooxx": 100000,
         "x_oooo_x": 9000,
         "oo_oo": 9000,
         "xoooo_": 1200,
         "_oooox": 1200,
-        "_ooo_": 1000,
-        "o_ooo": 500,
-        "ooo_o": 500,
-        "xooo__": 100,
-        "__ooox": 100,
-        "_ooo__": 30,
-        "__ooo_":30,
-        "ooo__": 20,
-        "__ooo":20,
-        "__oo__":20
+        "_ooo_": 1100,
+        "__ooox": 1000,
+        "xooo__": 1000,
+        "xooo_o": 4000,
+        "o_ooox": 4000,
+        "o_ooo": 1200,
+        "ooo_o": 1200,
+        "xooo__": 500,
+        "__ooox": 500,
+        "ooo__": 700,
+        "__ooo": 700,
         "oo___": 10,
         "_oo__": 10,
         "__oo_": 10,
@@ -215,7 +212,7 @@ def evaluate_board(goban: Goban) -> tuple:
         copy_goban.place(pos[X], pos[Y], False)
         # copy_goban.debug_print()
         eval_goban.board[pos[Y]][pos[X]] = static_eval(copy_goban, pos)
-    # print("DEBUG Printing eval board", file=sys.stderr)
-    # eval_goban.debug_print()
+    print("DEBUG Printing eval board", file=sys.stderr)
+    eval_goban.debug_print()
     return get_best_move_from_eval(eval_goban)
     # return randint(0, 19), randint(0, 19)
