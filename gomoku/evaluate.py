@@ -111,6 +111,9 @@ def static_eval(eval_goban: Goban, pos: tuple):
         "_xxxo": 100800,
         "oxxx_": 100800,
         "_xxx__":100700,
+        "__xxx_":100700,
+        "o_xxx_":100600,
+        "_xxx_o":100600,
         "_oooo_": 100000,
         "oo_oo_oo": 100000,
         "o_o_o": 100000,
@@ -125,6 +128,8 @@ def static_eval(eval_goban: Goban, pos: tuple):
         "ooo_o": 500,
         "xooo__": 100,
         "__ooox": 100,
+        "_ooo__": 30,
+        "__ooo_":30,
         "ooo__": 20,
         "__ooo":20,
         "__oo__":20
