@@ -29,6 +29,9 @@ or
   
 - Run `make`, which will create an executable copy of main.py, and pass this copy's path to your piksvork manager program.
 
+## Images
+![ezgif com-gif-maker(1)](https://user-images.githubusercontent.com/48228264/161283315-b732ecfe-bffc-41b2-bf1d-2dedd26a5422.gif)
+
 ## Authors
 - Matthieu Rochette
 - Theo Rohmer
